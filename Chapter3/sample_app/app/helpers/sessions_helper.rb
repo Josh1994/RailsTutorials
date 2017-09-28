@@ -19,6 +19,7 @@ module SessionsHelper
       #@current_user = @current_user || "bar". Current_user will be the first non nil or false
       # value. In this case it will be bar unless @current_user has a value.
     elsif (user_id = cookies.signed[:user_id])
+      #raise       # The tests still pass, so this branch is currently untested.      
       user = User.find_by(id: user_id)
       if user && user.authenticated?(cookies[:remember_token])
         log_in user
