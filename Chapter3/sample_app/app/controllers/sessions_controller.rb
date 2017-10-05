@@ -13,11 +13,12 @@ class SessionsController < ApplicationController
       #   forget(user)
       # end      
       params[:session][:remember_me] == '1' ? remember(@user) : forget(@user)      
-      redirect_to @user
+      redirect_back_or @user
     else
       # Create an error message.
       flash.now[:danger] = 'Invalid email/password combination' #:notice , :alert are default.
       render 'new'
+     # debugger
     end
   end
 
