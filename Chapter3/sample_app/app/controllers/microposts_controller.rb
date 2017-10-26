@@ -22,7 +22,7 @@ before_action :correct_user, only: :destroy
   private
     #Permits modification of micropost content attribute through the web
     def micropost_params
-      params.require(:micropost).permit(:content)
+      params.require(:micropost).permit(:content, :picture)
     end
 
     def correct_user
