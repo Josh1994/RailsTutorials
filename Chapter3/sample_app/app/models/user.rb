@@ -77,8 +77,14 @@ class User < ApplicationRecord
   #Defines a proto-feed
   #See "Following users" for the full implementation
   def feed
-    Micropost.where("user_id = ?", id) #? ensures that the id properly escaped. Avoiding serious securiy holes
-    # The id attribute is jsut an integer
+    following_ids = "SELECT followed_id FROM relationships WHERE follower_id = :user_id"
+    Micropost.where("user_id IN (#{following_ids}) OR user_id = :user_id",
+                    user_id: id)
+    # SELECT * FROM microposts
+    # WHERE user_id IN (SELECT followed_id FROM relationships
+    #               WHERE  follower_id = 1)
+    #   OR user_id = 1
+
   end
 
   #Follows a user.
